@@ -104,7 +104,7 @@ function App() {
     setIsDisabled(true);
     uploadFile(data);
     alert('Productos cargados correctamente.');
-    //window.location.reload()
+    window.location.reload()
   }
 
 
