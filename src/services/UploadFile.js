@@ -1,6 +1,6 @@
 
 const axios = require('axios').default;
-const BACKEND_URL = 'http://opticar-env.eba-arzsmdu7.us-east-1.elasticbeanstalk.com/api'
+const BACKEND_URL = 'http://opticar-env.eba-arzsmdu7.us-east-1.elasticbeanstalk.com:80/api'
   
 export async function uploadFile(bulkData) {
 
