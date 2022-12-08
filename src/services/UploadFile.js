@@ -1,6 +1,6 @@
 
 const axios = require('axios').default;
-const BACKEND_URL = 'https://cors-anywhere.herokuapp.com/http://opticar-env.eba-arzsmdu7.us-east-1.elasticbeanstalk.com'
+const BACKEND_URL = 'http://opticar-env.eba-arzsmdu7.us-east-1.elasticbeanstalk.com'
   
 export async function uploadFile(bulkData) {
 
