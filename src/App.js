@@ -49,8 +49,8 @@ function App() {
 
       //convert to array
       const fileData = XLSX.utils.sheet_to_json(workSheet, { header: 1 })
-
-      // console.log(fileData)
+      console.log("HOLA")
+      console.log(fileData)
       const headers = fileData[0]
       const heads = headers.map(head => ({ title: head, field: head }))
       
@@ -86,27 +86,62 @@ function App() {
         data[i].telephone = data[i].Teléfono;
         data[i].latitude = data[i].Latitud;
         data[i].longitude = data[i].Longitud;
-        data[i].neighborhood = data[i]['Localidad/Barrio'];
+        data[i].neighborhood = data[i]['Partido/Comuna'];
         data[i].province = data[i].Provincia;
         data[i].barcode = data[i]['Código de barras del producto'];
         data[i].description = data[i]['Descripción del producto'];
         data[i].category = data[i]['Categoría'];
+        data[i].department = data[i]['Piso/Departamento'];
+        data[i].deliveryDate = data[i]['Fecha de entrega'];
         data[i].weight = data[i].Peso;
         data[i].width = data[i].Ancho;
         data[i].large = data[i].Largo;
         data[i].height = data[i].Alto;
-        data[i].fragility = data[i].Fragilidad;
-        data[i].stackability = data[i].Apilabilidad;
+        if(data[i].Fragilidad === 'Si' || data[i].Fragilidad === 'si' 
+        || data[i].Fragilidad === 'Sí' || data[i].Fragilidad === 'sí') {
+          data[i].fragility = true;
+        } else {
+          data[i].fragility = false;
+        }
+        if(data[i].Apilabilidad === 'Si' || data[i].Apilabilidad === 'si' 
+        || data[i].Apilabilidad === 'Sí' || data[i].Apilabilidad === 'sí') {
+          data[i].stackability = true;
+        } else {
+          data[i].stackability = false;
+        }
+        if(data[i].Rotabilidad === 'Si' || data[i].Rotabilidad === 'si' 
+        || data[i].Rotabilidad === 'Sí' || data[i].Rotabilidad === 'sí') {
+          data[i].rotability = true;
+        } else {
+          data[i].rotability = false;
+        }
       }
     
     setData([]);
     setColDefs([]);
     setIsDisabled(true);
     uploadFile(data);
-    alert('Productos cargados correctamente.');
-    window.location.reload()
+    if(!alert('Productos cargados correctamente.')){window.location.reload();}
   }
 
+  function ExcelDateToJSDate(serial) {
+    var utc_days  = Math.floor(serial - 25569);
+    var utc_value = utc_days * 86400;                                        
+    var date_info = new Date(utc_value * 1000);
+ 
+    var fractional_day = serial - Math.floor(serial) + 0.0000001;
+ 
+    var total_seconds = Math.floor(86400 * fractional_day);
+ 
+    var seconds = total_seconds % 60;
+ 
+    total_seconds -= seconds;
+ 
+    var hours = Math.floor(total_seconds / (60 * 60));
+    var minutes = Math.floor(total_seconds / 60) % 60;
+ 
+    return new Date(date_info.getFullYear(), date_info.getMonth(), date_info.getDate(), hours, minutes, seconds);
+ }
 
   return (
     <div className="App">
